@@ -1,7 +1,7 @@
 OmCommands
 ==========
 
-This is a project meant to decouple the classes I use in my Bukkit plugins from any one plugin. This project can be compiled into a jar that can be used as a dependency for a plugin. Alternatively it could be included in the plugin's source using git submodules. Or if you are using Maven you could try using the JarJar plugin to repackage the class files in your jar:
+This is a project meant to decouple the classes I use in my Bukkit plugins from any one plugin. This project can be compiled into a jar that can be used as a dependency for a plugin. Alternatively it could be included in the plugin's source using git submodules. Or if you are using Maven you could try using the JarJar plugin to repackage the class files in your jar:  
 http://sonatype.github.com/jarjar-maven-plugin/  
 
 
