@@ -1,4 +1,4 @@
-package com.github.omwah.OmCommands;
+package com.github.omwah.omcommands;
 
 import org.bukkit.command.CommandSender;
 

@@ -6,7 +6,7 @@
  * Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
  **/
 
-package com.github.omwah.OmCommands;
+package com.github.omwah.omcommands;
 
 import java.util.ArrayList;
 import java.util.Arrays;

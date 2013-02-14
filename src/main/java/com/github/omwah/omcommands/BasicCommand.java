@@ -1,4 +1,4 @@
-package com.github.omwah.OmCommands;
+package com.github.omwah.omcommands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
