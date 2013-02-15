@@ -1,0 +1,7 @@
+main: com.github.omwah.omcommands.OmCommands
+name: ${project.name}
+version: ${project.version}
+author: Omwah
+description: ${project.description}
+commands:
+permissions:
