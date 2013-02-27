@@ -60,12 +60,12 @@ public abstract class BasicCommand implements PluginCommand {
 
     @Override
     public String getUsage(String label) {
-        if (this.name.equalsIgnoreCase(label) ){
+        if (this.identifiers.contains(label.toLowerCase()) ){
             // Queried as a main command
-            return "/" + usage;
+            return String.format(usage, label);
         } else {
             // Queried as a sub command
-            return "/" + label + " " + usage;
+            return String.format(usage, label + " " + getName());
         }
     }
 

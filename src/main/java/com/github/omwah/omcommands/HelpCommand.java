@@ -16,7 +16,7 @@ public class HelpCommand extends BasicCommand
         this.pluginName = pluginName;
         
         setDescription("Displays the help menu");
-        setUsage(this.getName() + " §8[page#]");
+        setUsage("/%s help §8[page#]");
         setArgumentRange(0, 1);
         
         // Respond to /<label> help
