@@ -3,6 +3,7 @@ package com.github.omwah.omcommands;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -24,13 +25,19 @@ public abstract class NestedCommandExecutor implements CommandExecutor {
      */
     public NestedCommandExecutor(JavaPlugin plugin, Command cmd, String admin_permission) {
         // Set up sub commands
-        Map<String, PluginCommand> sub_commands = getSubCommands(plugin);
+        List<PluginCommand> sub_cmd_list = getSubCommands(plugin);
+        
+        // Use LinkedHashMap so values are in the order they were inserted
+        Map<String, PluginCommand> sub_cmd_map = new LinkedHashMap<String, PluginCommand>();
+        for (PluginCommand sub_cmd : sub_cmd_list) {
+            sub_cmd_map.put(sub_cmd.getName(), sub_cmd);
+        }
 
         this.commandHandler = new CommandHandler(admin_permission);
-        if (sub_commands.containsKey(cmd.getName())) {
+        if (sub_cmd_map.containsKey(cmd.getName())) {
             // Set up the command handler with the sole sub command
             // that has been promoted to a top level command
-            this.commandHandler.addCommand((PluginCommand) sub_commands.get(cmd.getName()));
+            this.commandHandler.addCommand((PluginCommand) sub_cmd_map.get(cmd.getName()));
         } else {
             // Set up sub commands under a plugin top level command with a help command
             
@@ -43,7 +50,7 @@ public abstract class NestedCommandExecutor implements CommandExecutor {
             }             
             
             this.commandHandler.addCommand(help_cmd);
-            for (Iterator sub_cmd_iter = sub_commands.values().iterator(); sub_cmd_iter.hasNext();) {
+            for (Iterator sub_cmd_iter = sub_cmd_map.values().iterator(); sub_cmd_iter.hasNext();) {
                 this.commandHandler.addCommand((PluginCommand) sub_cmd_iter.next());
             }
         }
@@ -55,7 +62,7 @@ public abstract class NestedCommandExecutor implements CommandExecutor {
      * based on what is present in plugin.yml
      */
 
-    protected abstract Map<String, PluginCommand> getSubCommands(JavaPlugin plugin);
+    protected abstract List<PluginCommand> getSubCommands(JavaPlugin plugin);
   
 
     /*
