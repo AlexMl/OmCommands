@@ -1,26 +1,31 @@
 package com.github.omwah.omcommands;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import org.bukkit.command.CommandSender;
 
-public class HelpCommand extends BasicCommand
+public class HelpCommand extends TranslatedCommand
 {
     private String pluginName;
     private static final int CMDS_PER_PAGE = 8;
 
-    public HelpCommand(String pluginName)
-    {
+    public HelpCommand(String pluginName) {
         super("help");
         
         this.pluginName = pluginName;
         
-        setDescription("Displays the help menu");
-        setUsage("/%s help §8[page#]");
         setArgumentRange(0, 1);
+        setIdentifiers(this.getName(), "?");
+    }
+    
+    public HelpCommand(String pluginName, ResourceBundle translation) {
+        super("help", translation);
         
-        // Respond to /<label> help
-        // as well as any of the aliases for the plugin commands
+        this.pluginName = pluginName;
+        
+        setArgumentRange(0, 1);
         setIdentifiers(this.getName(), "?");
     }
 
@@ -56,7 +61,8 @@ public class HelpCommand extends BasicCommand
         if (page >= numPages || page < 0) {
             page = 0;
         }
-        sender.sendMessage("§c-----[ " + "§f" + this.pluginName + " Help <" + (page + 1) + "/" + numPages + ">§c ]-----");
+        String help_translation = getTranslation("HelpCommand-help");
+        sender.sendMessage("§c-----[ " + "§f" + this.pluginName + " " + help_translation + " <" + (page + 1) + "/" + numPages + ">§c ]-----");
         int start = page * CMDS_PER_PAGE;
         int end = start + CMDS_PER_PAGE;
         if (end > commands.size()) {
@@ -67,7 +73,7 @@ public class HelpCommand extends BasicCommand
             sender.sendMessage("  §a" + cmd.getUsage(label));
         }
 
-        sender.sendMessage("§cFor more info on a particular command, type §f/" + label + " <command> ?");
+        sender.sendMessage(getTranslation("HelpCommand-for_more_help", label));
 
         return true;
     }

@@ -23,11 +23,11 @@ public interface PluginCommand {
 
     public String getName();
 
-    public String[] getNotes();
-
     public String getPermission();
-
+    
     public String getUsage(String identifier);
+    
+    public void displayHelp(String label, CommandSender sender);
 
     public boolean isIdentifier(CommandSender executor, String input);
 

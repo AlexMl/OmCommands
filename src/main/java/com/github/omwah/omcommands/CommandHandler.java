@@ -1,5 +1,8 @@
 /**
- * Copyright (C) 2011 DThielke <dave.thielke@gmail.com>
+ * Portions Copyright (C) 2013 Omwah
+ * LGPL v3.0
+ * 
+ * Portions Copyright (C) 2011 DThielke <dave.thielke@gmail.com>
  *
  * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ or send a letter to
@@ -13,6 +16,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -85,17 +89,21 @@ public class CommandHandler
                         // Display help if the wrong number of arguments
                         // or ? is the sole argument
                         if (realArgs.length < cmd.getMinArguments() || realArgs.length > cmd.getMaxArguments()) {
-                            displayCommandHelp(label, cmd, sender);
+                            cmd.displayHelp(label, sender);
                             return true;
                         } else if (realArgs.length > 0 && "?".equals(realArgs[0])) {
-                            displayCommandHelp(label, cmd, sender);
+                            cmd.displayHelp(label, sender);
                             return true;
                         }
                     }
 
                     // Ensure sender has the proper permissions
                     if (!hasPermission(sender, cmd.getPermission())) {
-                        sender.sendMessage("Insufficient permission.");
+                        if(cmd instanceof TranslatedCommand) {
+                            sender.sendMessage(((TranslatedCommand) cmd).getTranslation("CommandHandler-no_permission"));
+                        } else {
+                            sender.sendMessage("Insufficient permission.");
+                        }
                         return true;
                     }
 
@@ -107,18 +115,6 @@ public class CommandHandler
         }
 
         return true;
-    }
-
-    private void displayCommandHelp(String label, PluginCommand cmd, CommandSender sender)
-    {
-        sender.sendMessage("§cCommand:§e " + cmd.getName());
-        sender.sendMessage("§cDescription:§e " + cmd.getDescription());
-        sender.sendMessage("§cUsage:§e " + cmd.getUsage(label));
-        if (cmd.getNotes() != null) {
-            for (String note : cmd.getNotes()) {
-                sender.sendMessage("§e" + note);
-            }
-        }
     }
 
     public boolean hasPermission(CommandSender sender, String permString)

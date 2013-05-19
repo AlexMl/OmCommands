@@ -1,29 +1,38 @@
 package com.github.omwah.omcommands;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.Server;
+import java.util.ResourceBundle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 
 /*
  * CommandExectuor that dispatches commands to CommandHandler classes and supports
  * nested sub commands
  */
 public abstract class NestedCommandExecutor implements CommandExecutor {
-    private CommandHandler commandHandler;
+    private final CommandHandler commandHandler;
+    private final ResourceBundle translation;
 
     /*
-     * This command executor needs to know about its plugin from which it came from
+     * Set up CommandExecutor with a default translation
      */
     public NestedCommandExecutor(JavaPlugin plugin, Command cmd, String admin_permission) {
+        this(plugin, cmd, admin_permission, 
+            ResourceBundle.getBundle("com.github.omwah.omcommands.DefaultTranslation"));
+    }
+    
+    /*
+     * Set up CommandExecutor with a specific translation
+     */
+    public NestedCommandExecutor(JavaPlugin plugin, Command cmd, String admin_permission, ResourceBundle translation) {
+        // Translation to use
+        this.translation = translation;
+        
         // Set up sub commands
         List<PluginCommand> sub_cmd_list = getSubCommands(plugin);
         
@@ -43,7 +52,7 @@ public abstract class NestedCommandExecutor implements CommandExecutor {
             
             // Add help commmand along with aliases to make it respond to command and
             // its aliases when no arguments are supplied
-            HelpCommand help_cmd = new HelpCommand(plugin.getName());
+            HelpCommand help_cmd = new HelpCommand(plugin.getName(), getTranslation());
             help_cmd.addIdentifier(cmd.getName());
             for (Iterator alias_iter = cmd.getAliases().iterator(); alias_iter.hasNext();) {
                 help_cmd.addIdentifier((String) alias_iter.next());
@@ -78,6 +87,14 @@ public abstract class NestedCommandExecutor implements CommandExecutor {
 
     public CommandHandler getCommandHandler() {
         return commandHandler;
+    }
+    
+    /*
+     * Get translation class
+     */
+    
+    public ResourceBundle getTranslation() {
+        return translation;
     }
 
 }

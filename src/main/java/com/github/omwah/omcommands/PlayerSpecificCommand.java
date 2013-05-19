@@ -1,17 +1,22 @@
 package com.github.omwah.omcommands;
 
+import java.util.ResourceBundle;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /*
  * Simply adds helper functionality for commands that deal with specific players
  */
-public abstract class PlayerSpecificCommand extends BasicCommand
+public abstract class PlayerSpecificCommand extends TranslatedCommand
 {
     public PlayerSpecificCommand(String name) {
         super(name);
     }
-
+    
+    public PlayerSpecificCommand(String name, ResourceBundle translation) {
+        super(name, translation);
+    }
+    
     /*
      * Gets a player name either as the Sender if it is a Player ir from the arguments
      * if it is supplied there. Returns null if there is a problem, which will be reported
@@ -34,7 +39,7 @@ public abstract class PlayerSpecificCommand extends BasicCommand
             Player player_obj = (Player) sender;
             if(playerIndex >= 0 && args.length > playerIndex && !args[playerIndex].equalsIgnoreCase(player_obj.getName())) {
                 // Player tried to specify owner's name without sufficient privileges
-                sender.sendMessage("Insufficient privileges to access another player's account");
+                sender.sendMessage(getTranslation("PlayerSpecificCommand-no_permission"));
                 return null;
 
             } else {
@@ -44,7 +49,7 @@ public abstract class PlayerSpecificCommand extends BasicCommand
 
         } else {
             // Sender is not a Player so must be a console access
-            sender.sendMessage("Must specify player name when using this command from the console");
+            sender.sendMessage(getTranslation("PlayerSpecificCommand-specify_player_name"));
             return null;
         }
 
