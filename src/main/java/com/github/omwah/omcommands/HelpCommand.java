@@ -61,7 +61,7 @@ public class HelpCommand extends TranslatedCommand
         if (page >= numPages || page < 0) {
             page = 0;
         }
-        String help_translation = getTranslation("HelpCommand-help");
+        String help_translation = getClassTranslation("help");
         sender.sendMessage("§c-----[ " + "§f" + this.pluginName + " " + help_translation + " <" + (page + 1) + "/" + numPages + ">§c ]-----");
         int start = page * CMDS_PER_PAGE;
         int end = start + CMDS_PER_PAGE;
@@ -73,7 +73,7 @@ public class HelpCommand extends TranslatedCommand
             sender.sendMessage("  §a" + cmd.getUsage(label));
         }
 
-        sender.sendMessage(getTranslation("HelpCommand-for_more_help", label));
+        sender.sendMessage(getClassTranslation("for_more_help", label));
 
         return true;
     }

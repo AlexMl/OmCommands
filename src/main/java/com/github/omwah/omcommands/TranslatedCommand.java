@@ -82,4 +82,23 @@ public abstract class TranslatedCommand extends BasicCommand {
         return translation.getString(key);
     }
     
+    /*
+     * Gets a translation which uses the class name as a prefix in the
+     * form: ClassName-key
+     */
+    
+    public String getClassTranslation(String key, Object... arguments) {
+        String class_key = this.getClass().getSimpleName() + "-" + key;
+        return getTranslation(class_key, arguments);
+    }
+    
+    /*
+     * Gets a translation which uses the class name as a prefix in the
+     * form: ClassName-key
+     */
+    
+    public String getClassTranslation(String key) {
+        String class_key = this.getClass().getSimpleName() + "-" + key;
+        return getTranslation(class_key);
+    }
 }
