@@ -18,7 +18,8 @@ public class DefaultTranslation extends ListResourceBundle {
         { "PlayerSpecificCommand-specify_player_name", "Must specify player name when using this command from the console"},    
         { "HelpCommand-description", "Displays the help menu" },
         { "HelpCommand-usage", "/{0} help §8[page#]" },
-        { "HelpCommand-help", "Help" },
+        { "HelpCommand-banner", "§c-----[§f {0} Help <{1,number,integer}/{2,number,integer}>§c ]-----" },
+        { "HelpCommand-help_line", "  §a{0}" },
         { "HelpCommand-for_more_help", "§cFor more info on a particular command, type §f/{0} <command> ?" },
     };
     
