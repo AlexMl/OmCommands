@@ -1,19 +1,19 @@
 package com.github.omwah.omcommands;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.bukkit.command.CommandSender;
 
 public abstract class BasicCommand implements PluginCommand {
 
-    private String name;
-    private String description = "";
-    private String usage = "";
-    private String permission = "";
-    private String[] notes = new String[0];
-    private ArrayList<String> identifiers;
-    private int minArguments = 0;
-    private int maxArguments = 0;
+    protected String name;
+    protected String description = "";
+    protected String usage = "";
+    protected String permission = "";
+    protected ArrayList<String> identifiers;
+    protected int minArguments = 0;
+    protected int maxArguments = 0;
 
     public BasicCommand(String name) {
         this.name = name;
@@ -49,11 +49,6 @@ public abstract class BasicCommand implements PluginCommand {
     }
 
     @Override
-    public String[] getNotes() {
-        return notes;
-    }
-
-    @Override
     public String getPermission() {
         return permission;
     }
@@ -62,13 +57,20 @@ public abstract class BasicCommand implements PluginCommand {
     public String getUsage(String label) {
         if (this.identifiers.contains(label.toLowerCase()) ){
             // Queried as a main command
-            return String.format(usage, label);
+            return MessageFormat.format(usage, label);
         } else {
             // Queried as a sub command
-            return String.format(usage, label + " " + getName());
+            return MessageFormat.format(usage, label + " " + getName());
         }
     }
-
+    
+    @Override
+    public void displayHelp(String label, CommandSender sender) {
+        sender.sendMessage("§cCommand:§e " + this.getName());
+        sender.sendMessage("§cDescription:§e " + this.getDescription());
+        sender.sendMessage("§cUsage:§e " + this.getUsage(label));
+    }
+    
     @Override
     public boolean isIdentifier(CommandSender executor, String input) {
         for (String identifier : identifiers) {
@@ -109,10 +111,6 @@ public abstract class BasicCommand implements PluginCommand {
     
     public void addIdentifier(String new_identifier) {
         this.identifiers.add(new_identifier);
-    }
-
-    public void setNotes(String... notes) {
-        this.notes = notes;
     }
 
     public void setPermission(String permission) {
