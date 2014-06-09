@@ -20,40 +20,32 @@ public abstract class BasicCommand implements PluginCommand {
         this.identifiers = new ArrayList<String>();
     }
 
-    @Override
     public void cancelInteraction(CommandSender executor) {}
 
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
     public String[] getIdentifiers() {
         return (String[]) identifiers.toArray();
     }
 
-    @Override
     public int getMaxArguments() {
         return maxArguments;
     }
 
-    @Override
     public int getMinArguments() {
         return minArguments;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public String getPermission() {
         return permission;
     }
 
-    @Override
     public String getUsage(String label) {
         if (this.identifiers.contains(label.toLowerCase()) ){
             // Queried as a main command
@@ -64,14 +56,12 @@ public abstract class BasicCommand implements PluginCommand {
         }
     }
     
-    @Override
     public void displayHelp(String label, CommandSender sender) {
         sender.sendMessage("§cCommand:§e " + this.getName());
         sender.sendMessage("§cDescription:§e " + this.getDescription());
         sender.sendMessage("§cUsage:§e " + this.getUsage(label));
     }
     
-    @Override
     public boolean isIdentifier(CommandSender executor, String input) {
         for (String identifier : identifiers) {
             if (input.equalsIgnoreCase(identifier)) {
@@ -81,17 +71,14 @@ public abstract class BasicCommand implements PluginCommand {
         return false;
     }
 
-    @Override
     public boolean isInProgress(CommandSender executor) {
         return false;
     }
 
-    @Override
     public boolean isInteractive() {
         return false;
     }
 
-    @Override
     public boolean isShownOnHelpMenu() {
         return true;
     }

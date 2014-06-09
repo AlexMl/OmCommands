@@ -1,6 +1,5 @@
 package com.github.omwah.omcommands;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,7 +28,6 @@ public class HelpCommand extends TranslatedCommand
         setIdentifiers(this.getName(), "?");
     }
 
-    @Override
     public boolean execute(CommandHandler handler, CommandSender sender, String label, String identifier, String[] args)
     {
         int page = 0;
